@@ -1,0 +1,60 @@
+<?php
+/*
+https://bittrex.com/api/v1.1/public/getticker?market=btc-ltc
+https://bittrex.com/api/v1.1/public/getticker?market=btc-byc
+https://bittrex.com/api/v1.1/public/getticker?market=btc-xmr
+*/
+?>
+
+<?php
+  if( $_POST["location"] )
+  {
+    $location = $_POST["location"];
+	 
+	switch ($location) {
+		case "1":
+			$location = "https://bittrex.com/api/v1.1/public/getticker?market=btc-ltc";
+			$json = file_get_contents($location);
+			break;
+		case "2":
+			$location = "https://bittrex.com/api/v1.1/public/getticker?market=btc-byc";
+			$json = file_get_contents($location);
+			break;
+		case "3":
+			$location =  "https://bittrex.com/api/v1.1/public/getticker?market=btc-xmr";
+			$json = file_get_contents($location);
+			break;
+	}
+	
+	// echo $location;
+		
+	// var_dump(json_decode($json, true));
+	echo $json;
+	echo '<br/>';
+	
+	$obj = json_decode($json);
+		echo $obj->result->Last; 
+
+	// echo $json;
+    exit();
+  }
+?>
+<html>
+<body>
+   <p>Choose market :</p>
+   <form action="<?php $_PHP_SELF ?>" method="POST">
+   <select name="location">
+      <option value="1">
+            bitcoin - litecoin [btc/ltc]
+      </option>
+      <option value="2">
+            bitcoin - bytecent [btc/byc]
+      </option>
+	  <option value="3">
+            bitcoin - monero [btc/xmr]
+      </option>
+   </select>
+   <input type="submit" value="Submit" />
+   </form>
+</body>
+</html>
